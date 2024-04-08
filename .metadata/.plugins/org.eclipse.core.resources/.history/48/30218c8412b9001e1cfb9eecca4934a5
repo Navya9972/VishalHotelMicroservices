@@ -1,0 +1,74 @@
+package com.userservices.services.Imp;
+
+import java.util.ArrayList;
+
+
+import java.util.List;
+
+import java.util.UUID;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.netflix.discovery.converters.Auto;
+import com.userservices.entities.Hotel;
+import com.userservices.entities.Rating;
+import com.userservices.entities.User;
+import com.userservices.exceptions.ResourceNotFoundException;
+import com.userservices.external.services.HotelService;
+import com.userservices.repo.UserRepo;
+import com.userservices.services.UserServices;
+
+@Service
+public class UserServiceImpl implements UserServices{
+
+	@Autowired
+	private UserRepo userrpo;
+	
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@Autowired
+	private HotelService hotelservice;
+	
+	private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+	
+	@Override
+	public User saveUser(User user) {
+		String randomUserId = UUID.randomUUID().toString();
+		user.setId(randomUserId);
+		return userrpo.save(user);
+		}
+
+	
+	@Override
+	public List<User> getAllUser() {
+		return userrpo.findAll();
+	}
+	
+	
+
+	@Override
+	public User getUser(String userId) {
+		User user = userrpo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User with given ID does not exist id:!!" + userId));
+//		Rating rating = new Rating; 
+		//Hotel hotel = hotelservice.getHotel(Rating.getHotelId());
+		ArrayList<Rating> ratingsList = restTemplate.getForObject("http://HOTEL-RATING-APPLICATION/ratings/getByUserId/"+ user.getId(), ArrayList.class);
+		user.setRatings(ratingsList);
+		
+		List<Rating> ratingList = ratingsList.stream().map(rating -> {
+			ResponseEntity<Hotel> HotelList = restTemplate.getForEntity("http://localhost:8082/hotels/getHotel/b0eb2434-1f4a-498c-844f-b9a1c355feaf",Hotel.class);
+			Hotel hotel = HotelList.getBody();
+			return rating;
+		}).collect(Collectors.toList());
+		
+		return user;
+	}
+
+}

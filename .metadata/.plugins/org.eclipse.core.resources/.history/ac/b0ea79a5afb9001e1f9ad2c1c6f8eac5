@@ -1,0 +1,17 @@
+package com.userservices.external.services;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.userservices.entities.Rating;
+
+@FeignClient(name ="HOTEL-RATING-APPLICATION")
+public interface RatingService {
+
+	@PostMapping("/ratings/createRating")
+	Rating createRating();
+	
+	@PostMapping("/ratings/{ratingId}")
+	Rating updateRating(@PathVariable("ratingId") String ratingId , Rating rating);
+}

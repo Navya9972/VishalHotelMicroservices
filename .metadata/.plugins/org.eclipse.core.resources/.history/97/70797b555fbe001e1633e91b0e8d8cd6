@@ -1,0 +1,13 @@
+server:
+  port: 8083
+  
+spring:
+  application:
+    name: HOTEL-RATING-APPLICATION
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: lcwd
+
+  config:
+    import: optional:configserver:http://localhost:8888

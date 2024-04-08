@@ -1,0 +1,6 @@
+package com.userservices.external.services;
+
+
+public interface RatingService {
+
+}

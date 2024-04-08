@@ -1,0 +1,40 @@
+package com.userservices.entities;
+
+
+
+import java.util.ArrayList;
+
+import org.hibernate.mapping.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name="micro_user")
+@Entity
+public class User {
+	
+    @Id	
+    private String userId;
+    
+    private String name;
+    private String email;
+    private String about;
+    @ElementCollection
+    private java.util.List<Rating> ratings = new ArrayList<>();
+    
+}
+

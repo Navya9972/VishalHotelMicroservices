@@ -1,0 +1,65 @@
+server:
+  port: 8765
+  
+  
+spring:
+   application:
+    name: API-GATEWAY  
+   main:
+    web-application-type: reactive
+  
+    
+   cloud:
+    gateway:
+      routes:
+        - id: USER-APPLICATION
+          uri: http://localhost:8081
+          predicates:
+            - Path=/user/**
+ 
+        - id: HOTEL-RATING-APPLICATION
+          uri: lb://HOTEL-RATING-APPLICATION
+          predicates:
+            - Path=/ratings/**
+            
+        - id: HOTEL-SERVICE-APPLICATION
+          uri: lb://HOTEL-SERVICE-APPLICATION
+          predicates:
+            - Path=/hotels/**
+            
+      discovery:
+           locator : 
+                  enabled : true
+              
+#  In a Spring Boot application, the management.endpoints.web.exposure.include 
+#  property is used to configure which actuator endpoints are exposed over HTTP.
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  endpoint:
+    gateway:
+      enabled: true
+
+
+## okta configuration details
+#okta:
+#   oauth3:
+#      issuer: https://dev-74965978.okta.com/oauth2/default
+#      audience: api://default
+#      client-id: 0oafrzrlmptg3AO9J5d7
+#      client-secret: tW8MYEH-JpLNY7gg4hmDoWrjjCvAY6KLKX6WKqs67fZWlr8MKSF44itHp2zVfb6H
+#      scopes: openid,profile,email,offline_access
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+    

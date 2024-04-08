@@ -1,0 +1,23 @@
+server:
+  port: 8084
+  
+spring:
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: USER-APPLICATION
+          uri: lb://USER-APPLICATION
+          predicates:
+            - Path=/user/**
+ 
+        - id: HOTEL-RATING-APPLICATION
+          uri: lb://HOTEL-RATING-APPLICATION
+          predicates:
+            - Path=/ratings/**
+            
+        - id: HOTEL-SERVICE-APPLICATION
+          uri: lb://HOTEL-SERVICE-APPLICATION
+          predicates:
+            - Path=/hotels/**

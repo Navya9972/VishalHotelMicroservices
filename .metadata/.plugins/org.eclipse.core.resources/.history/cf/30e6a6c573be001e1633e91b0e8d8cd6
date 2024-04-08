@@ -1,0 +1,30 @@
+server:
+  port: 8765
+  
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: API-GATEWAY  
+  cloud:
+    gateway:
+      routes:
+        - id: USER-APPLICATION
+          uri: lb://USER-APPLICATION
+          predicates:
+            - Path=/user/**
+ 
+        - id: HOTEL-RATING-APPLICATION
+          uri: lb://HOTEL-RATING-APPLICATION
+          predicates:
+            - Path=/ratings/**
+            
+        - id: HOTEL-SERVICE-APPLICATION
+          uri: lb://HOTEL-SERVICE-APPLICATION
+          predicates:
+            - Path=/hotels/**
+okta:
+  oauth2:
+    issuer: https://dev-24503841.okta.com/oauth2/default
+    audience: api://default

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="MavenProjectImportWizardPage">
+		<list key="rootDirectory">
+			<item value="D:\lcwd\HotelService"/>
+			<item value="D:\lcwd\UserService"/>
+			<item value="D:\lcwd\Hotel-Rating"/>
+			<item value="D:\lcwd\ConfigServer"/>
+			<item value="D:\lcwd\ApiGateway"/>
+			<item value="D:\lcwd\Service-Registry"/>
+			<item value="D:\UserManagement"/>
+			<item value="D:\Chrome Downloads\user-service\user-service"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+</section>

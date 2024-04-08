@@ -1,0 +1,12 @@
+package com.userservices.external.services;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+import com.userservices.entities.Rating;
+
+@FeignClient(name ="HOTEL-RATING-APPLICATION")
+public interface RatingService {
+
+	Rating createRating();
+	Rating updateRating();
+}

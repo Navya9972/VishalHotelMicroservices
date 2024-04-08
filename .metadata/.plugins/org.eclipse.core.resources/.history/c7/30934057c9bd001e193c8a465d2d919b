@@ -1,0 +1,40 @@
+server:
+  port: 8081
+
+  
+
+spring:
+  application:
+    name: USER-APPLICATION
+  datasource:
+    url: jdbc:mysql://localhost:3306/lcwd
+    username: root
+    password: Vi$h@l@123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  config:
+    import: optional:configserver:http://localhost:8888
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+        - health
+  endpoint:
+    health:
+      show-details: always
+      
+resilience4j:
+  circuitbreaker:
+    instances:
+      ratingHotelBreaker:
+        register-health-indicator: true

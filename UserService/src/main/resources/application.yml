@@ -1,0 +1,93 @@
+server:
+  port: 8081
+
+eureka:
+  instance:
+    hostname: localhost
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    
+ 
+spring:
+#  application:
+#    name: USER-APPLICATION
+    
+  datasource:
+    url: jdbc:mysql://localhost:3306/HotelUser
+    username: root
+    password: Vedaannoji@07
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    
+    
+               
+
+#  security:
+#    oauth2:
+#      resource-server:
+#        jwt:
+#          jwk-set-uri: http://localhost:8088/realms/dev/protocol/openid-connect/certs
+#          issuer-uri: http://localhost:8088/realms/dev
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  config:
+     import: optional:configserver:http://localhost:8888
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+        - health
+  endpoint:
+    health:
+      show-details: always
+      
+resilience4j:
+  circuitbreaker:
+    instances:
+      ratingHotelBreaker:
+        register-health-indicator: true
+        event-consumer-buffer-size: 10
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 6s
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-size: 10
+        sliding-window-type: COUNT_BASED
+        
+        
+  retry:
+    instances:
+      ratingHotelBreaker:
+        max-attempts: 3
+        wait-duration: 5s
+        
+        
+  ratelimiter:
+    instances:
+      userHotelLimiter:
+        limit-refresh-period: 4s
+        limit-for-period: 2
+        timeout-duration: 2
+        
+        
+        
+#keycloak:
+#  admin:
+#    server-url: http://localhost:8088/
+#    realm: dev
+#    client-id: spring-boot
+#    client-secret: UynumQTdILZHsCeSkQblzuMdrSshWw9L
+
+
+        

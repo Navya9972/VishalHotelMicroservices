@@ -1,0 +1,25 @@
+server:
+  port: 8082
+  
+  
+spring:
+  application:
+    name: HOTEL-SERVICE-APPLICATION
+    
+    
+   
+  datasource:
+     url: jdbc:postgresql://localhost:5432/Hotel
+     username: postgres
+     password: postgres
+     driver-class-name: org.postgresql.Driver
+     
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  config:
+    import: optional:configserver:http://localhost:8888
+     
+  

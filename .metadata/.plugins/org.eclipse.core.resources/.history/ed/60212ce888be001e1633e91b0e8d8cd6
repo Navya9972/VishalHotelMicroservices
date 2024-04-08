@@ -1,0 +1,7 @@
+package com.lcwd.gateway.models;
+
+public class AuthResponse {
+private String userId;
+private String accessToken;
+
+}

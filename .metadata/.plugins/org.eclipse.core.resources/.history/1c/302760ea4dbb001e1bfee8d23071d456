@@ -1,0 +1,18 @@
+server:
+  port: 8084
+  
+spring:
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: user-application
+          uri: lb://USER-APPLICATION
+          predicates:
+            - Path=/v1/api/users/**
+ 
+        - id: vehicle-service
+          uri: lb://vehicle-service
+          predicates:
+            - Path=/v1/api/vehicles/**
